@@ -1,0 +1,407 @@
+/*
+This file is part of PiResiduos.
+
+Copyright 2017-2019, Prointegra SL.
+
+PiResiduos is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PiResiduos is distributed in the hope that it will 
+be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PiResiduos.  
+If not, see <https://www.gnu.org/licenses/>.
+*/
+/*! remote MySQL database description*/
+
+mysql> show tables;
+ +-----------------------------------+
+ | Tables_in_biogesin_SistGestPesaje |
+ +-----------------------------------+
+ | basculistas                       |
+ | centros                           |
+ | clientes                          |
+ | clientes_asociado                 |
+ | clientes_productos                |
+ | configuracion                     |
+ | entidades_facturacion             |
+ | movimientos                       |
+ | ordenes                           |
+ | permisos                          |
+ | productos                         |
+ | roles                             |
+ | transferencias                    |
+ | transito                          |
+ | transito_salidas                  |
+ | transportistas                    |
+ | usuarios                          |
+ | vehiculos                         |
+ +-----------------------------------+
+ 
+ mysql> describe basculistas;
+ +---------+---------+------+-----+---------+----------------+
+ | Field   | Type    | Null | Key | Default | Extra          |
+ +---------+---------+------+-----+---------+----------------+
+ | CODIGO  | int(11) | NO   | PRI | NULL    | auto_increment |
+ | NOMBRE  | text    | NO   |     | NULL    |                |
+ | NIF     | text    | NO   |     | NULL    |                |
+ | BORRADO | int(11) | NO   |     | 0       |                |
+ +---------+---------+------+-----+---------+----------------+
+ 
+ mysql> describe centros;
+ +--------------------+-------------+------+-----+---------+-------+
+ | Field              | Type        | Null | Key | Default | Extra |
+ +--------------------+-------------+------+-----+---------+-------+
+ | CODIGO_CENTRO      | int(20)     | NO   | PRI | NULL    |       |
+ | TIPO_CENTRO        | varchar(20) | NO   |     | NULL    |       |
+ | NOMBRE             | text        | NO   |     | NULL    |       |
+ | NIF                | varchar(50) | NO   |     | NULL    |       |
+ | DOMICILIO          | text        | NO   |     | NULL    |       |
+ | PROVINCIA          | text        | NO   |     | NULL    |       |
+ | POBLACION          | text        | NO   |     | NULL    |       |
+ | CP                 | varchar(5)  | NO   |     | NULL    |       |
+ | COMUNIDAD_AUTONOMA | text        | NO   |     | NULL    |       |
+ | NIMA               | varchar(10) | NO   |     | NULL    |       |
+ | NUM_INSCRIPCION    | varchar(50) | NO   |     | NULL    |       |
+ | TELEFONO           | varchar(50) | NO   |     | NULL    |       |
+ | MAIL               | text        | NO   |     | NULL    |       |
+ | BORRADO            | int(11)     | NO   |     | 0       |       |
+ +--------------------+-------------+------+-----+---------+-------+
+
+ mysql> describe clientes;
+ +-----------------------+-------------+------+-----+---------+----------------+
+ | Field                 | Type        | Null | Key | Default | Extra          |
+ +-----------------------+-------------+------+-----+---------+----------------+
+ | CODIGO                | int(11)     | NO   | PRI | NULL    | auto_increment |
+ | NOMBRE                | text        | YES  |     | NULL    |                |
+ | NIF                   | text        | YES  |     | NULL    |                |
+ | DIRECCION             | text        | YES  |     | NULL    |                |
+ | PROVINCIA             | text        | YES  |     | NULL    |                |
+ | POBLACION             | text        | YES  |     | NULL    |                |
+ | CP                    | int(11)     | YES  |     | NULL    |                |
+ | ENTIDAD_FACTURACION   | int(11)     | YES  |     | NULL    |                |
+ | CBC                   | int(11)     | YES  |     | NULL    |                |
+ | TIPO                  | int(11)     | NO   |     | NULL    |                |
+ | COMUNIDAD_AUTONOMA    | text        | NO   |     | NULL    |                |
+ | NIMA                  | varchar(10) | NO   |     | NULL    |                |
+ | NUM_INSCRIPCION       | varchar(50) | NO   |     | NULL    |                |
+ | TELEFONO              | varchar(50) | NO   |     | NULL    |                |
+ | MAIL                  | text        | NO   |     | NULL    |                |
+ | TRANSPORTISTA_DEFECTO | int(11)     | NO   |     | 0       |                |
+ | BORRADO               | int(11)     | NO   |     | 0       |                |
+ +-----------------------+-------------+------+-----+---------+----------------+
+
+ mysql> describe clientes_asociado;
+ +-----------------+---------+------+-----+---------+----------------+
+ | Field           | Type    | Null | Key | Default | Extra          |
+ +-----------------+---------+------+-----+---------+----------------+
+ | id              | int(11) | NO   | PRI | NULL    | auto_increment |
+ | codigo_padre    | int(11) | NO   |     | NULL    |                |
+ | codigo_asociado | int(11) | NO   |     | NULL    |                |
+ +-----------------+---------+------+-----+---------+----------------+
+
+mysql> mysql> describe clientes_productos;
++--------------------+--------------+------+-----+---------+-------+
+| Field              | Type         | Null | Key | Default | Extra |
++--------------------+--------------+------+-----+---------+-------+
+| CODIGO_PROD        | int(11)      | NO   | PRI | NULL    |       |
+| CODIGO_CLIENTE     | int(11)      | NO   | PRI | NULL    |       |
+| CONTRATO_PT        | date         | YES  |     | NULL    |       |
+| NPT_PT             | varchar(110) | YES  |     | NULL    |       |
+| CB_PT              | int(11)      | YES  |     | NULL    |       |
+| CP_PT              | int(11)      | YES  |     | NULL    |       |
+| DCP_PT             | int(11)      | YES  |     | NULL    |       |
+| CONTRATO_ET        | date         | YES  |     | NULL    |       |
+| NPT_ET             | varchar(110) | YES  |     | NULL    |       |
+| CB_ET              | int(11)      | YES  |     | NULL    |       |
+| CP_ET              | int(11)      | YES  |     | NULL    |       |
+| DCP_ET             | int(11)      | YES  |     | NULL    |       |
+| CONTRATO_D5        | date         | YES  |     | NULL    |       |
+| NPT_D5             | varchar(110) | YES  |     | NULL    |       |
+| CB_D5              | int(11)      | YES  |     | NULL    |       |
+| CP_D5              | int(11)      | YES  |     | NULL    |       |
+| DCP_D5             | int(11)      | YES  |     | NULL    |       |
+| CONTRATO_SAL       | date         | YES  |     | NULL    |       |
+| NPT_SAL            | varchar(110) | YES  |     | NULL    |       |
+| CB_SAL             | int(11)      | YES  |     | NULL    |       |
+| CP_SAL             | int(11)      | YES  |     | NULL    |       |
+| DCP_SAL            | int(11)      | YES  |     | NULL    |       |
+| PRECIO_TRATAMIENTO | float(30,2)  | NO   |     | NULL    |       |
++--------------------+--------------+------+-----+---------+-------+
+
+mysql> describe configuracion;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| ID                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOMBRE             | text        | NO   |     | NULL    |                |
+| NIF                | text        | NO   |     | NULL    |                |
+| DIRECCION          | text        | NO   |     | NULL    |                |
+| PROVINCIA          | text        | NO   |     | NULL    |                |
+| POBLACION          | text        | NO   |     | NULL    |                |
+| CP                 | int(11)     | NO   |     | NULL    |                |
+| COMUNIDAD_AUTONOMA | text        | NO   |     | NULL    |                |
+| NIMA               | varchar(10) | NO   |     | NULL    |                |
+| NUM_INSCRIPCION    | varchar(50) | NO   |     | NULL    |                |
+| TELEFONO           | varchar(50) | NO   |     | NULL    |                |
+| MAIL               | text        | NO   |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+
+mysql> describe entidades_facturacion;
++--------------------+-----------------+------+-----+---------+----------------+
+| Field              | Type            | Null | Key | Default | Extra          |
++--------------------+-----------------+------+-----+---------+----------------+
+| CODIGO             | int(11)         | NO   | PRI | NULL    | auto_increment |
+| NOMBRE             | text            | NO   |     | NULL    |                |
+| NIF                | text            | NO   |     | NULL    |                |
+| DIRECCION          | text            | NO   |     | NULL    |                |
+| CP                 | int(11)         | NO   |     | NULL    |                |
+| POBLACION          | text            | NO   |     | NULL    |                |
+| PROVINCIA          | text            | NO   |     | NULL    |                |
+| COMUNIDAD_AUTONOMA | text            | NO   |     | NULL    |                |
+| NIMA               | varchar(10)     | NO   |     | NULL    |                |
+| NUM_INSCRIPCION    | varchar(50)     | NO   |     | NULL    |                |
+| FP                 | text            | NO   |     | NULL    |                |
+| IBAN               | text            | NO   |     | NULL    |                |
+| ENVIO_FACT         | enum('Si','No') | NO   |     | NULL    |                |
+| TELEFONO           | varchar(50)     | NO   |     | NULL    |                |
+| MAIL               | text            | NO   |     | NULL    |                |
+| BORRADO            | int(11)         | NO   |     | 0       |                |
++--------------------+-----------------+------+-----+---------+----------------+
+
+mysql> describe movimientos;
++---------------------------------------------+-------------+------+-----+---------+----------------+
+| Field                                       | Type        | Null | Key | Default | Extra          |
++---------------------------------------------+-------------+------+-----+---------+----------------+
+| CODIGO_MOV                                  | double      | NO   | PRI | NULL    | auto_increment |
+| DI                                          | text        | NO   |     | NULL    |                |
+| FECHA_HORA_INICIO                           | datetime    | NO   |     | NULL    |                |
+| FECHA_HORA_FINAL                            | datetime    | NO   |     | NULL    |                |
+| TIPO_MOVIMIENTO                             | int(11)     | NO   |     | NULL    |                |
+| CODIGO_CLIENTE                              | int(11)     | NO   |     | NULL    |                |
+| CODIGO_PRODUCTO                             | int(11)     | NO   |     | NULL    |                |
+| CODIGO_TRANSPORTISTA                        | int(11)     | NO   |     | NULL    |                |
+| PESO_NETO                                   | float(30,2) | NO   |     | NULL    |                |
+| PESO_TARA                                   | float(30,2) | NO   |     | NULL    |                |
+| PESO_BRUTO                                  | float(30,2) | NO   |     | NULL    |                |
+| PRECIO                                      | float(30,2) | NO   |     | NULL    |                |
+| VEHICULO                                    | text        | NO   |     | NULL    |                |
+| REMOLQUE                                    | text        | NO   |     | NULL    |                |
+| CENTRO_ORIGEN                               | text        | NO   |     | NULL    |                |
+| CENTRO_DESTINO                              | text        | NO   |     | NULL    |                |
+| INCIDENCIAS                                 | text        | NO   |     | NULL    |                |
+| COMENTARIO_OPERADOR                         | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_NOMBRE                   | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_NIF                      | varchar(20) | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_DOMICILIO                | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_PROVINCIA                | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_POBLACION                | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_CODIGO_POSTAL            | varchar(5)  | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_COMUNIDAD_AUTONOMA       | text        | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_NIMA                     | varchar(10) | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_NUM_INSCRIPCION_REGISTRO | varchar(50) | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_TELEFONO                 | varchar(50) | NO   |     | NULL    |                |
+| CLIENTE_PARTICULAR_CORREO_ELECTRONICO       | text        | NO   |     | NULL    |                |
+| DESTINO_NOMBRE                              | text        | NO   |     | NULL    |                |
+| DESTINO_NIF                                 | text        | NO   |     | NULL    |                |
+| DESTINO_DOMICILIO                           | text        | NO   |     | NULL    |                |
+| DESTINO_PROVINCIA                           | text        | NO   |     | NULL    |                |
+| DESTINO_POBLACION                           | text        | NO   |     | NULL    |                |
+| DESTINO_CODIGO_POSTAL                       | varchar(5)  | NO   |     | NULL    |                |
+| DESTINO_COMUNIDAD_AUTONOMA                  | text        | NO   |     | NULL    |                |
+| DESTINO_NIMA                                | varchar(10) | NO   |     | NULL    |                |
+| DESTINO_NUM_INSCRIPCION_REGISTRO            | varchar(50) | NO   |     | NULL    |                |
+| DESTINO_TELEFONO                            | varchar(50) | NO   |     | NULL    |                |
+| DESTINO_CORREO_ELECTRONICO                  | text        | NO   |     | NULL    |                |
+| TIPO_CLIENTE                                | int(11)     | NO   |     | NULL    |                |
++---------------------------------------------+-------------+------+-----+---------+----------------+
+
+mysql> describe ordenes;
++-----------------------+----------+------+-----+---------+----------------+
+| Field                 | Type     | Null | Key | Default | Extra          |
++-----------------------+----------+------+-----+---------+----------------+
+| CODIGO_ORDEN          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| ECOEMBES              | int(11)  | NO   |     | NULL    |                |
+| CODIGO_CLIENTE        | int(11)  | NO   |     | NULL    |                |
+| CODIGO_PRODUCTO       | int(11)  | NO   |     | NULL    |                |
+| FECHA_FIRMA           | datetime | NO   |     | NULL    |                |
+| FECHA_PROGRAMADA      | datetime | NO   |     | NULL    |                |
+| PRECIO_TN             | float    | NO   |     | NULL    |                |
+| PESO_RETIRAR          | float    | YES  |     | NULL    |                |
+| CODIGO_DESTINO        | int(11)  | NO   |     | NULL    |                |
+| OPERACION_TRATAMIENTO | text     | NO   |     | NULL    |                |
+| REPETIR               | int(11)  | NO   |     | NULL    |                |
++-----------------------+----------+------+-----+---------+----------------+
+
+mysql> describe permisos;
++----------------+---------+------+-----+---------+----------------+
+| Field          | Type    | Null | Key | Default | Extra          |
++----------------+---------+------+-----+---------+----------------+
+| codigo_permiso | int(11) | NO   | PRI | NULL    | auto_increment |
+| zona           | text    | NO   |     | NULL    |                |
+| codigo_rol     | int(11) | NO   |     | NULL    |                |
++----------------+---------+------+-----+---------+----------------+
+
+mysql> describe productos;
++---------------------+------------+------+-----+---------+----------------+
+| Field               | Type       | Null | Key | Default | Extra          |
++---------------------+------------+------+-----+---------+----------------+
+| CODIGO_PROD         | int(11)    | NO   | PRI | NULL    | auto_increment |
+| CODIGO_LER          | int(11)    | YES  |     | NULL    |                |
+| NOMBRE              | text       | YES  |     | NULL    |                |
+| NOMBRE2             | text       | YES  |     | NULL    |                |
+| NOMBRE3             | text       | YES  |     | NULL    |                |
+| PERMISO_PT          | int(11)    | YES  |     | NULL    |                |
+| CONTRATO_PT         | int(11)    | YES  |     | NULL    |                |
+| NPT_PT              | int(11)    | YES  |     | NULL    |                |
+| CB_PT               | int(11)    | YES  |     | NULL    |                |
+| CP_PT               | int(11)    | YES  |     | NULL    |                |
+| DCP_PT              | int(11)    | YES  |     | NULL    |                |
+| PERMISO_ET          | int(11)    | YES  |     | NULL    |                |
+| CONTRATO_ET         | int(11)    | YES  |     | NULL    |                |
+| NPT_ET              | int(11)    | YES  |     | NULL    |                |
+| CB_ET               | int(11)    | YES  |     | NULL    |                |
+| CP_ET               | int(11)    | YES  |     | NULL    |                |
+| DCP_ET              | int(11)    | YES  |     | NULL    |                |
+| PERMISO_D5          | int(11)    | YES  |     | NULL    |                |
+| CONTRATO_D5         | int(11)    | YES  |     | NULL    |                |
+| NPT_D5              | int(11)    | YES  |     | NULL    |                |
+| CB_D5               | int(11)    | YES  |     | NULL    |                |
+| CP_D5               | int(11)    | YES  |     | NULL    |                |
+| DCP_D5              | int(11)    | YES  |     | NULL    |                |
+| PERMISO_SAL         | int(11)    | YES  |     | NULL    |                |
+| CONTRATO_SAL        | int(11)    | YES  |     | NULL    |                |
+| NPT_SAL             | int(11)    | YES  |     | NULL    |                |
+| CB_SAL              | int(11)    | YES  |     | NULL    |                |
+| CP_SAL              | int(11)    | YES  |     | NULL    |                |
+| DCP_SAL             | int(11)    | YES  |     | NULL    |                |
+| DESCRIPCION_PELIGRO | text       | NO   |     | NULL    |                |
+| PRECIO_DEFECTO      | float(9,2) | NO   |     | 0.00    |                |
+| BORRADO             | int(11)    | NO   |     | 0       |                |
++---------------------+------------+------+-----+---------+----------------+
+
+mysql> describe roles;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| codigo_rol | int(11) | NO   | PRI | NULL    | auto_increment |
+| nombre     | text    | NO   |     | NULL    |                |
+| time_out   | int(11) | NO   |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+
+mysql> describe transferencias;
++-----------------------+----------+------+-----+---------+-------+
+| Field                 | Type     | Null | Key | Default | Extra |
++-----------------------+----------+------+-----+---------+-------+
+| DI                    | text     | NO   |     | NULL    |       |
+| FECHA_HORA            | datetime | NO   | PRI | NULL    |       |
+| CODIGO_ORIGEN         | int(11)  | NO   | PRI | NULL    |       |
+| CODIGO_DESTINO        | int(11)  | NO   | PRI | NULL    |       |
+| CODIGO_PRODUCTO       | int(11)  | NO   |     | NULL    |       |
+| CODIGO_TRANSPORTISTA  | int(11)  | NO   |     | NULL    |       |
+| MATRICULA             | text     | NO   |     | NULL    |       |
+| REMOLQUE              | text     | NO   |     | NULL    |       |
+| INCIDENCIAS           | text     | NO   |     | NULL    |       |
+| COMENTARIO_OPERADOR   | text     | NO   |     | NULL    |       |
+| OPERACION_TRATAMIENTO | text     | NO   |     | NULL    |       |
+| BORRADO               | int(11)  | NO   |     | 0       |       |
++-----------------------+----------+------+-----+---------+-------+
+
+mysql> describe transito;
++---------------------+-------------+------+-----+---------+-------+
+| Field               | Type        | Null | Key | Default | Extra |
++---------------------+-------------+------+-----+---------+-------+
+| DI                  | text        | NO   |     | NULL    |       |
+| FECHA_HORA          | datetime    | NO   | PRI | NULL    |       |
+| TIPO_MOVIMIENTO     | int(11)     | NO   |     | NULL    |       |
+| CODIGO_CLIENTE      | int(11)     | NO   | PRI | NULL    |       |
+| CODIGO_PRODUCTO     | int(11)     | NO   |     | NULL    |       |
+| PESO_ENTRADA        | float(30,2) | NO   |     | NULL    |       |
+| PRECIO              | float(30,2) | NO   |     | NULL    |       |
+| MATRICULA           | text        | NO   |     | NULL    |       |
+| REMOLQUE            | text        | NO   |     | NULL    |       |
+| CODIGO_ORIGEN       | int(11)     | NO   |     | NULL    |       |
+| INCIDENCIAS         | text        | NO   |     | NULL    |       |
+| COMENTARIO_OPERADOR | text        | NO   |     | NULL    |       |
+| PESO_SALIDA         | float(30,2) | NO   |     | NULL    |       |
+| CODIGO_ESTACION     | int(11)     | NO   | PRI | NULL    |       |
++---------------------+-------------+------+-----+---------+-------+
+
+mysql> describe transito_salidas;
++---------------------+-------------+------+-----+---------+-------+
+| Field               | Type        | Null | Key | Default | Extra |
++---------------------+-------------+------+-----+---------+-------+
+| DI                  | text        | NO   |     | NULL    |       |
+| FECHA_HORA          | datetime    | NO   | PRI | NULL    |       |
+| CODIGO_CLIENTE      | int(11)     | NO   | PRI | NULL    |       |
+| CODIGO_PRODUCTO     | int(11)     | NO   |     | NULL    |       |
+| PESO_ENTRADA        | float(30,2) | NO   |     | NULL    |       |
+| PRECIO              | float(30,2) | NO   |     | NULL    |       |
+| MATRICULA           | text        | NO   |     | NULL    |       |
+| REMOLQUE            | text        | NO   |     | NULL    |       |
+| PESO_A_RETIRAR      | float(30,2) | NO   |     | NULL    |       |
+| PESO_RETIRADO       | float(30,2) | NO   |     | NULL    |       |
+| CODIGO_DESTINO      | int(11)     | NO   |     | NULL    |       |
+| ECOEMBES            | int(11)     | NO   |     | NULL    |       |
+| INCIDENCIAS         | text        | NO   |     | NULL    |       |
+| COMENTARIO_OPERADOR | text        | NO   |     | NULL    |       |
+| CODIGO_ESTACION     | int(11)     | NO   | PRI | NULL    |       |
++---------------------+-------------+------+-----+---------+-------+
+
+mysql> describe transportistas;
++----------------------+-------------+------+-----+---------+----------------+
+| Field                | Type        | Null | Key | Default | Extra          |
++----------------------+-------------+------+-----+---------+----------------+
+| CODIGO_TRANSPORTISTA | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOMBRE               | text        | NO   |     | NULL    |                |
+| NIF                  | varchar(50) | NO   |     | NULL    |                |
+| DOMICILIO            | text        | NO   |     | NULL    |                |
+| PROVINCIA            | text        | NO   |     | NULL    |                |
+| POBLACION            | text        | NO   |     | NULL    |                |
+| CP                   | varchar(5)  | NO   |     | NULL    |                |
+| COMUNIDAD_AUTONOMA   | text        | NO   |     | NULL    |                |
+| NIMA                 | varchar(10) | NO   |     | NULL    |                |
+| NUM_INSCRIPCION      | varchar(50) | YES  |     | NULL    |                |
+| TELEFONO             | varchar(50) | NO   |     | NULL    |                |
+| MAIL                 | text        | NO   |     | NULL    |                |
+| BORRADO              | int(11)     | NO   |     | 0       |                |
++----------------------+-------------+------+-----+---------+----------------+
+
+mysql> describe usuarios;
++----------------+---------+------+-----+---------+----------------+
+| Field          | Type    | Null | Key | Default | Extra          |
++----------------+---------+------+-----+---------+----------------+
+| codigo_cliente | int(11) | NO   | PRI | NULL    | auto_increment |
+| user           | text    | NO   |     | NULL    |                |
+| pass           | text    | NO   |     | NULL    |                |
+| rol            | int(11) | NO   |     | NULL    |                |
+| borrado        | int(11) | NO   |     | 0       |                |
++----------------+---------+------+-----+---------+----------------+
+
+mysql> describe vehiculos;
++-------------------+---------+------+-----+---------+-------+
+| Field             | Type    | Null | Key | Default | Extra |
++-------------------+---------+------+-----+---------+-------+
+| CODIGO_VEHICULO   | int(11) | NO   | PRI | NULL    |       |
+| MATRICULA         | text    | YES  |     | NULL    |       |
+| VEHICULO_REMOLQUE | int(11) | YES  |     | NULL    |       |
+| TARA              | int(11) | YES  |     | NULL    |       |
+| PMA               | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE1   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE2   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE3   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE4   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE5   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE6   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE7   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE8   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE9   | int(11) | YES  |     | NULL    |       |
+| CODIGO_CLIENTE10  | int(11) | YES  |     | NULL    |       |
+| BORRADO           | int(11) | NO   |     | 0       |       |
++-------------------+---------+------+-----+---------+-------+
+
+
