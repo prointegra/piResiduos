@@ -19,11 +19,11 @@ put the ssh key for example in extras/ .
 
 for building the local database execute in terminal it's creations cript
 
- sqlite3 bio.db < bio.sqlite3
+    sqlite3 bio.db < bio.sqlite3
  
 ## remote server database structure
 
- see file bio.remote.
+see file bio.remote.
 
 ## hardware needed
 It was first designed using a privative signing pad, it has been removed in this free version, now I think I would use a software signing pad using dual screens.
@@ -37,9 +37,9 @@ It has been developed only for GNU/Linux, it's working now for real under ubuntu
 
 Once dependencies are installed or compiled and linked.
 
- qmake
- make
- sh piResiduos.sh
+    qmake
+    make
+    sh piResiduos.sh
 
 Happy Hacking!
 
