@@ -3,10 +3,10 @@ garbage managing software, (currently only in spanish) we have several local nod
 developed using pvbrowser(https://github.com/pvbrowser/pvb) SCADA framework.
 
 ## dependencies
-libharu >= 2.3.0
-SmtpClient-for-Qt (https://github.com/bluetiger9/SmtpClient-for-Qt) Put it inside lib folder, see lib/README.md for more info.
-pvbrowser (pvslib and rllib)
-boost
++ libharu >= 2.3.0
++ SmtpClient-for-Qt (https://github.com/bluetiger9/SmtpClient-for-Qt) Put it inside lib folder, see lib/README.md for more info.
++ pvbrowser (pvslib and rllib)
++ boost
 
 ## remote database connection and web administration page
 piResiduos is developed for working with a central remote MySQL database in mind, you'll need a VPS and it's connections for tunneling the database (SSH) and being able to syncronize, update, share, etc.
