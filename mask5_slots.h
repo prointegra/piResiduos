@@ -257,9 +257,10 @@ static int slotButtonReleasedEvent(PARAM *p, int id, DATA *d)
   
     else if(id == BUTDELETRANS)
     {
-      if(d->camionElegido >=0 && !d->plateElegida.empty())
+      std::cout << "BUTDELETRANS: camion elegido:" << d->camionElegido << std::endl;
+      if(d->camionElegido >=0 && !d->pre_transito_plate.empty())
 	{
-	  std::string message = "¿Desea eliminar el transporte con matrícula/código: " + d->plateElegida + " de la tabla de tránsito interna?";
+	  std::string message = "¿Desea eliminar el transporte con matrícula/código: " + d->pre_transito_plate + " de la tabla de tránsito interna?";
 	  pvMessageBox(p,BUTDELETRANS,BoxWarning,message.c_str(),MessageBoxOk ,MessageBoxCancel,0);
 	}
     }
@@ -493,6 +494,7 @@ static int slotSelectionEvent(PARAM *p, int id, DATA *d, int val, const char *te
     {
       if(val >= 0 && strcmp(text,"(null)"))
 	{
+	  d->camionElegido = val;
 	  d->post_transito_plate.clear();
 	  d->transito_plate.clear();
 	  //std::cout << "pressend on " << text << std::endl;
