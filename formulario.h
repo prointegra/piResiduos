@@ -393,7 +393,7 @@ class  baseForm
   virtual int setMovCode(std::string lastCode, int stationCode, int movementTypeCode){return 0;};
   //
   
-  virtual void saveSignature();
+  virtual void saveSignature(int blank_signature = 0);
   virtual void saveSignature(const char* file);  
   virtual int isSignature();
   virtual void createPdf(std::string printerId){};
