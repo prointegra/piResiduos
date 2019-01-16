@@ -2624,7 +2624,7 @@ static int maquinaEstados(PARAM *p, DATA *d)
       else if(d->test)
 	{
 	  d->test = 0;
-	  formEntrada->saveSignature();
+	  formEntrada->saveSignature(1);
 	  d->enFutEstado = 1023;
 	}
       break;

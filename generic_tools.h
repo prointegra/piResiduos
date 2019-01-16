@@ -40,6 +40,11 @@ If not, see <https://www.gnu.org/licenses/>.
 #include <netdb.h>
 #include <ctype.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
+#include <sys/sendfile.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 //string, vectors tools
 std::vector <std::string> stringToVector(std::string text,std::string separator);
@@ -68,6 +73,7 @@ std::string fromBufferAPeso(char * buffer);
 //SPECIAL
 int upload_movement_files_from_sql(std::vector< std::vector< std::string>> data_from_sql_movement, int field);
 int copy_files_to_remote_server(std::string folder_in_backups);
+int tools_copy(const char * origin, const char * destination);
 int log_message(std::string message, int level);
 
 #endif
