@@ -1615,7 +1615,7 @@ static int actualizaEstado(PARAM *p, DATA *d)
 	    else if(error ==-1)
 	      {
 		console.push_back("*ERROR* ¡Hubo errores al guardar el movimiento en el servidor central!");
-		console.push_back("*ERROR* ¡Necesita sincronizar! Si se trata de un movimiento de transferencia necesitará que administración lo borre manualmente");
+		console.push_back("*ERROR* ¡Necesita sincronizar para actualizar el movimiento en el servidor central!");
 		std::string myPrinter;
 		miIni->retPrinterId(myPrinter);
 		if(myPrinter.empty())
@@ -1625,6 +1625,12 @@ static int actualizaEstado(PARAM *p, DATA *d)
 		formEntrada->createPdf(myPrinter);
 		mailClient->sendIncidentsMail(myStation,formEntrada);
 		formEntrada->backupFiles(formEntrada->retDepMovCode().c_str());
+	      }
+	    else if(error == -10)
+	      {
+		console.push_back("*ERROR* ¡Hubo errores al guardar el movimiento en el servidor central!");
+		console.push_back("*ERROR* ¡Necesita sincronizar! Vuelva a intentarlo");
+		d->error = 1;
 	      }
 	    else
 	      console.push_back("*ERROR* ¡Fallo al guardar el movimiento!");
@@ -2624,7 +2630,7 @@ static int maquinaEstados(PARAM *p, DATA *d)
       else if(d->test)
 	{
 	  d->test = 0;
-	  formEntrada->saveSignature();
+	  formEntrada->saveSignature(1);
 	  d->enFutEstado = 1023;
 	}
       break;
@@ -2738,15 +2744,24 @@ static int maquinaEstados(PARAM *p, DATA *d)
 	}
       break;
     case 1098://animation state
+      d->error=0;
       d->enFutEstado = 1099;
       break;
     case 1099:
-      pvSetText(p,EDITDIDEF,"");
-      pvSetText(p,EDITPESOTARA,"");
-      pvSetText(p,EDITCAM_E2,"");
-      resetForm(p,d,formEntrada);
-      d->enFutEstado = 1000;
-      console.push_back("INFO: Formulario finalizado!");
+      if(!d->error)
+	{
+	  pvSetText(p,EDITDIDEF,"");
+	  pvSetText(p,EDITPESOTARA,"");
+	  pvSetText(p,EDITCAM_E2,"");
+	  resetForm(p,d,formEntrada);
+	  d->enFutEstado = 1000;
+	  console.push_back("INFO: Formulario finalizado!");
+	}
+      else
+	{
+	  d->error=0;
+	  d->enFutEstado = 1030;
+	}
       break;
       
     case 1035: //fin de firma

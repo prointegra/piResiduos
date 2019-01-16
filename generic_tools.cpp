@@ -577,6 +577,30 @@ int copy_files_to_remote_server(std::string folder_in_backup)
   return(system(command.c_str()));
 }
 
+int tools_copy(const char * origin, const char * destination)
+{
+ int read_fd;
+ int write_fd;
+ struct stat stat_buf;
+ off_t offset = 0;
+
+ /* Open the input file. */
+ read_fd = open (origin, O_RDONLY);
+ /* Stat the input file to obtain its size. */
+ fstat (read_fd, &stat_buf);
+ /* Open the output file for writing, with the same permissions as the
+   source file. */
+ write_fd = open (destination, O_WRONLY | O_CREAT, stat_buf.st_mode);
+ /* Blast the bytes from one file to the other. */
+ sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+ /* Close up. */
+ close (read_fd);
+ close (write_fd);
+
+ return 0;
+
+}
+
 int log_message(std::string message, int level)
 {
   //TODO, hardcoded

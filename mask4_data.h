@@ -79,6 +79,7 @@ typedef struct // (todo: define your data structure here)
   int f4Sincro;
   int f5Toggle;
 
+  int error;
   
   int lastMask;
 

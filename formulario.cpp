@@ -593,7 +593,7 @@ void baseForm::savePlateImage(int pos,const char* entrada_salida)
   return;
 }
 
-void baseForm::saveSignature()
+void baseForm::saveSignature(int blank_signature)
 {
    int ret;
   ret = system("mkdir saves");
@@ -602,14 +602,21 @@ void baseForm::saveSignature()
   command += depFolder + "\"";
   std::cout << "TERMINAL COMMAND: " << command << std::endl;
   ret = system(command.c_str());
-  
-  command.clear();
-  command = "convert FIRMA.ppm \"";
-  command += depFolder;
-  command += "/firma.png\"";
-  std::cout << command << std::endl;
-  ret = system(command.c_str());
-  
+
+  if(!blank_signature)
+    {
+      command.clear();
+      command = "convert FIRMA.ppm \"";
+      command += depFolder;
+      command += "/firma.png\"";
+      std::cout << command << std::endl;
+      ret = system(command.c_str());
+    }
+  else
+    {
+      std::string destination_path = depFolder + "/firma.png";
+      ret = tools_copy("./image/void.png",destination_path.c_str());
+    }
   return;
 }
 
