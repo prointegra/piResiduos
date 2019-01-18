@@ -1810,7 +1810,7 @@ delete localDestination;
 
  //DESC
  HPDF_Page_BeginText (page2);
- myText = retDepProdName1(), retDepProdName2(), retDepProdName3();
+ myText = retDepProdName1() + " " + retDepProdName2() + " " + retDepProdName3();
  HPDF_Page_MoveTextPos (page2, 305, 1075);
  HPDF_Page_ShowText (page2, myText.c_str());
  HPDF_Page_EndText (page2);
@@ -2134,7 +2134,11 @@ delete localDestination;
      HPDF_Page_MoveTextPos (page2, 600, 320);
      HPDF_Page_ShowText (page2, "PRECIO:");
 
-     std::string precio_final = std::to_string(retDepTotalWeight()*retDepPrice());
+     double total_price = retDepTotalWeight()*retDepPrice() / 1000.0;
+     std::stringstream stream;
+     stream << std::fixed << std::setprecision(2) << total_price;
+     std::string precio_final = stream.str();
+ 
      precio_final += " Euros";
  
      HPDF_Page_MoveTextPos(page2, 20, -45);
