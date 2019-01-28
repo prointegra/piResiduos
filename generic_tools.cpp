@@ -207,9 +207,18 @@ std::vector<std::string> ret_paragraph_with_lines_return(std::string original,in
   tmp = original;
   while(tmp.length() > line_width)
     {
-      new_pos = tmp.substr(0,line_width).find_last_of(" ");
-      my_paragraph.push_back(tmp.substr(0,new_pos));
-      tmp = tmp.substr(new_pos+1);
+      std::cout << "analizyng string: " << tmp << " , longitud:" << tmp.length() << std::endl;
+      new_pos = tmp.substr(0,line_width).find_last_of(' ');
+      if(new_pos != std::string::npos)
+	{
+	  my_paragraph.push_back(tmp.substr(0,new_pos));
+	  tmp = tmp.substr(new_pos+1);
+	}
+      else
+	{
+	  my_paragraph.push_back(tmp.substr(0,line_width));
+	  tmp = tmp.substr(line_width+1);
+	}
     }
   my_paragraph.push_back(tmp);
   return my_paragraph;
