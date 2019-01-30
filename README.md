@@ -4,7 +4,7 @@ developed using pvbrowser(https://github.com/pvbrowser/pvb) SCADA framework.
 
 ## dependencies
 + libharu >= 2.3.0
-+ SmtpClient-for-Qt (https://github.com/bluetiger9/SmtpClient-for-Qt) Put it inside lib folder, see lib/README.md for more info.
++ SmtpClient-for-Qt (https://github.com/bluetiger9/SmtpClient-for-Qt) as submodule inside lib folder.
 + pvbrowser (pvslib and rllib)
 + boost
 
